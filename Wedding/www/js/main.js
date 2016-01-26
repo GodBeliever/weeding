@@ -1,7 +1,6 @@
 /* ---------------------------------------------------------------
  * ------------------- Global variable | Bad ??? ----------------- 
    --------------------------------------------------------------- */
-var previousQuote;
 var actualQuote;
 var hiddenSentence;
 var dispercedSentence;
@@ -16,23 +15,19 @@ function getRandomColor (){
     return '#'+ Math.round(0xffffff * Math.random()).toString(16);
 }
 
-function getRandomPos (){
+function getRandomPos (elemWidth,elemHeight){
     // make position sensitive to size and document's width
-    /*posX = (Math.random() * ($(window).width() - divsize)).toFixed();
-    posY = (Math.random() * ($(window).height() - divsize)).toFixed();*/
-    
-    posX = (Math.random() * ($(window).width())).toFixed();
-    posY = (Math.random() * ($(window).height())).toFixed();
+    posX = (Math.random() * ($(window).width() - elemWidth)).toFixed();
+    posY = (Math.random() * ($(window).height() - elemHeight)).toFixed();
     
     return {x: posX, y: posY};
 }
 
 function getAQuote(){
 	var random = Math.floor(Math.random() * $.wedding.quote.length)
-	if(previousQuote.id == $.wedding.quote[random].id){
+	if(actualQuote.id == $.wedding.quote[random].id){
 		return getAQuote();
 	}
-	previousQuote = actualQuote;
 	actualQuote = $.wedding.quote[random]
 	return actualQuote;
 }
@@ -60,8 +55,8 @@ function getAQuote(){
     }); 
 }*/
 //TODO remove id car inutile
-function addToHiddenQuote(text,id,classText,type){
-	$elem = $('<'+type+'>'+text+'</'+type+'>').attr('id',id).addClass(classText);
+function addToHiddenQuote(text,classText,type){
+	$elem = $('<'+type+'>'+text+'</'+type+'>').addClass(classText);
 	hiddenSentence.push($elem);
 	$elem.appendTo('#quotePlace');
 }
@@ -69,7 +64,7 @@ function addToHiddenQuote(text,id,classText,type){
 function addToVisibleQuote(text,classText,type){
 	$visibleDiv = $('<'+type+'>'+text+'</'+type+'>').addClass(classText);
 	dispercedSentence.push($visibleDiv);
-	pos = getRandomPos();
+	pos = getRandomPos($visibleDiv.width(),$visibleDiv.height());
 
 	$visibleDiv.css({
 		'position':'absolute',
@@ -80,21 +75,12 @@ function addToVisibleQuote(text,classText,type){
 }
 
 function quoteMng(){
-		previousQuote = {id:-1};
+		actualQuote = {id:-1};
 		hiddenSentence = [];
 		dispercedSentence = [];
 
 		color = getRandomColor();
 		quote = getAQuote();
-
-		quotePlacePos = getRandomPos();
-
-		//Change the #quotePlace position
-		$('#quotePlace').css({
-			'position':'absolute',
-			'left':quotePlacePos.x+'px',
-			'top':quotePlacePos.y+'px'
-		});
 
 		nbCar = 0
 
@@ -102,22 +88,24 @@ function quoteMng(){
 		for(var i=0,len=quote.sentence.length;i<len;i++){
 			nbCar += quote.sentence[i].length;
 
-			addToHiddenQuote(quote.sentence[i],quote.sentence[i]+i,'hiddenQuote','span');
+			addToHiddenQuote(quote.sentence[i],'hiddenQuote','span');
+			addToHiddenQuote(' ','hiddenQuote','span');
 			addToVisibleQuote(quote.sentence[i],'visibleQuote','div');
+			addToVisibleQuote(' ','visibleQuote','div');
 		}
 
 		//Add the markup for the author
-		addToHiddenQuote(quote.person,quote.person,'hiddenQuoteAuthor','div');
+		addToHiddenQuote(quote.person,'hiddenQuoteAuthor','div');
 		addToVisibleQuote(quote.person,'visibleQuoteAuthor','div');
-		//
-		/*console.log('#'+authorID);
-	$('#'+authorID).on('remove', function () {
-		console.log('On remove OK');
-		alert('Element was Alex');
-		quoteMng();
-    });*/
+		
+		quotePlacePos = getRandomPos($('#quotePlace').width(),$('#quotePlace').height());
 
-
+		//Change the #quotePlace position
+		$('#quotePlace').css({
+			'position':'absolute',
+			'left':quotePlacePos.x+'px',
+			'top':quotePlacePos.y+'px'
+		});
 		//Processing the translation
 		for(var i=0,len=dispercedSentence.length;i<len;i++){
 			var trans = $(hiddenSentence[i]).offset();
@@ -133,14 +121,13 @@ function quoteMng(){
 		var timeCoef = 1;
 		if(nbCar <= 10) {
 			timeCoef = 300;
-		}else if(nbCar > 10 && nbCar < 50){
+		}else if(nbCar > 10 && nbCar <= 50){
 			timeCoef = 100;
-		} else if(nbCar > 50 && nbCar < 100){
+		} else if(nbCar > 50 && nbCar <= 100){
 			timeCoef = 80;
 		}else if (nbCar > 100){
 			timeCoef = 50;
 		}
-		console.log('timeCoef = '+timeCoef+' | nbCar = '+nbCar);
 		$('.visibleQuote').delay(nbCar * timeCoef).fadeOut(700, function(){
 			$(this).remove();
 		});

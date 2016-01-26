@@ -72,16 +72,24 @@ textarea {
 
 .hiddenQuote {
 	visibility: hidden;
-	margin: 2px;
 }
 
 .hiddenQuoteAuthor {
 	visibility: hidden;
 }
 
+.visibleQuote {
+	
+}
+
+.visibleQuoteAuthor{
+	
+}
+
 #quotePlace {
-	width: 300px;
-	text-align: right;
+	word-wrap: break-word;
+	width: 23em;
+	height: 18em;
 }
 
 /* ===== Initializr Styles ==================================================
