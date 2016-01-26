@@ -51,6 +51,38 @@ textarea {
     padding: 0.2em 0;
 }
 
+/* ===== Lyly & Alex Styles ==================================================
+   Author: Alexandre François
+   ========================================================================== */
+   
+#logo-wrapper {
+	margin:auto;
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    width:30em;
+    height:18em;
+    margin-top: -9em; /*set to a negative number 1/2 of your height*/
+    margin-left: -15em; /*set to a negative number 1/2 of your width*/
+}
+
+#HomeLogoFrame {
+ 	display:block;
+ }
+
+.hiddenQuote {
+	visibility: hidden;
+	margin: 2px;
+}
+
+.hiddenQuoteAuthor {
+	visibility: hidden;
+}
+
+#quotePlace {
+	width: 300px;
+	text-align: right;
+}
 
 /* ===== Initializr Styles ==================================================
    Author: Jonathan Verrecchia - verekia.com/initializr/responsive-template
