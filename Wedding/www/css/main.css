@@ -79,14 +79,15 @@ textarea {
 }
 
 .visibleQuote {
-	
+	position:absolute;
 }
 
 .visibleQuoteAuthor{
-	
+	position:absolute;
 }
 
 #quotePlace {
+	position:absolute;
 	word-wrap: break-word;
 	width: 23em;
 	height: 18em;

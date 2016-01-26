@@ -5,7 +5,8 @@ var actualQuote;
 var hiddenSentence;
 var dispercedSentence;
 var ready;
-
+var windowWidth;
+var windowHeight;
 /* ---------------------------------------------------------------
  * -------------------- Helpers Functions ------------------------ 
    --------------------------------------------------------------- */
@@ -17,8 +18,11 @@ function getRandomColor (){
 
 function getRandomPos (elemWidth,elemHeight){
     // make position sensitive to size and document's width
-    posX = (Math.random() * ($(window).width() - elemWidth)).toFixed();
-    posY = (Math.random() * ($(window).height() - elemHeight)).toFixed();
+    //posX = (Math.random() * (windowWidth - elemWidth)).toFixed();
+    //posY = (Math.random() * (windowHeight - elemHeight)).toFixed();
+    
+    posX = Math.floor((Math.random() * (windowWidth - elemWidth)));
+    posY = Math.floor((Math.random() * (windowHeight - elemHeight)));
     
     return {x: posX, y: posY};
 }
@@ -32,29 +36,6 @@ function getAQuote(){
 	return actualQuote;
 }
 
-/*function getRandomColor (){
-    var color = '#'+ Math.round(0xffffff * Math.random()).toString(16);
-    $newdiv = $('<div/>').css({
-        'width':divsize+'px',
-        'height':divsize+'px',
-        'background-color': color
-    });
-
-    // make position sensitive to size and document's width
-    var posx = (Math.random() * ($(document).width() - divsize)).toFixed();
-    var posy = (Math.random() * ($(document).height() - divsize)).toFixed();
-
-    $newdiv.css({
-        'position':'absolute',
-        'left':posx+'px',
-        'top':posy+'px',
-        'display':'none'
-    }).appendTo( 'body' ).fadeIn(100).delay(1000).fadeOut(500, function(){
-      $(this).remove();
-      makeDiv(); 
-    }); 
-}*/
-//TODO remove id car inutile
 function addToHiddenQuote(text,classText,type){
 	$elem = $('<'+type+'>'+text+'</'+type+'>').addClass(classText);
 	hiddenSentence.push($elem);
@@ -67,9 +48,8 @@ function addToVisibleQuote(text,classText,type){
 	pos = getRandomPos($visibleDiv.width(),$visibleDiv.height());
 
 	$visibleDiv.css({
-		'position':'absolute',
-		'left':pos.x+'px',
-		'top':pos.y+'px',
+		'left':pos.x,
+		'top':pos.y,
 		'display':'none'
 	}).appendTo( '#home' ).fadeIn(800);
 }
@@ -84,6 +64,8 @@ function quoteMng(){
 
 		nbCar = 0
 
+		$('#quotePlace').contents().remove();
+		
 		//Processing the quote
 		for(var i=0,len=quote.sentence.length;i<len;i++){
 			nbCar += quote.sentence[i].length;
@@ -99,20 +81,21 @@ function quoteMng(){
 		addToVisibleQuote(quote.person,'visibleQuoteAuthor','div');
 		
 		quotePlacePos = getRandomPos($('#quotePlace').width(),$('#quotePlace').height());
-
+		
+		console.log('Window Width = '+windowWidth+' | Windows Heigth = '+windowHeight);
+		console.log('quote place x = '+quotePlacePos.x+' | quote place y = '+quotePlacePos.y);
 		//Change the #quotePlace position
-		$('#quotePlace').css({
-			'position':'absolute',
-			'left':quotePlacePos.x+'px',
-			'top':quotePlacePos.y+'px'
+		$('#quotePlace').animate({
+			'left':quotePlacePos.x,
+			'top':quotePlacePos.y
 		});
 		//Processing the translation
 		for(var i=0,len=dispercedSentence.length;i<len;i++){
 			var trans = $(hiddenSentence[i]).offset();
 			//$(dispercedSentence[i]).delay(nbCar * 500).transition({x:pos.left,y:pos.top},1000,'ease');
 			$(dispercedSentence[i]).delay(1500).animate({
-				'left':trans.left,
-				'top':trans.top
+				'left':Math.floor(trans.left),
+				'top':Math.floor(trans.top)
 			},1300
 			);
 		}
@@ -141,5 +124,7 @@ function quoteMng(){
  * ------------------------ Main function ------------------------ 
    --------------------------------------------------------------- */
 $(document).ready(function(){
+	windowWidth = $(window).width();
+	windowHeight = $(window).height();
 	quoteMng();
 });
