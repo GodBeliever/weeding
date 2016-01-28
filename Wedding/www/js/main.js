@@ -7,6 +7,10 @@ var dispercedSentence;
 var ready;
 var windowWidth;
 var windowHeight;
+var quoteStyle = 'quote';
+var quoteVisible = 'visibleQuote';
+var quoteHidden = 'hiddenQuote';
+var quoteAuthorStyle = 'quoteAuthor';
 /* ---------------------------------------------------------------
  * -------------------- Helpers Functions ------------------------ 
    --------------------------------------------------------------- */
@@ -51,7 +55,7 @@ function addToVisibleQuote(text,classText,type){
 		'left':pos.x,
 		'top':pos.y,
 		'display':'none'
-	}).appendTo( '#home' ).fadeIn(800);
+	}).appendTo( '#homePage' ).fadeIn(800);
 }
 
 function quoteMng(){
@@ -70,20 +74,18 @@ function quoteMng(){
 		for(var i=0,len=quote.sentence.length;i<len;i++){
 			nbCar += quote.sentence[i].length;
 
-			addToHiddenQuote(quote.sentence[i],'hiddenQuote','span');
-			addToHiddenQuote(' ','hiddenQuote','span');
-			addToVisibleQuote(quote.sentence[i],'visibleQuote','div');
-			addToVisibleQuote(' ','visibleQuote','div');
+			addToHiddenQuote(quote.sentence[i],quoteHidden +' '+quoteStyle,'span');
+			addToHiddenQuote(' ',quoteHidden+' '+quoteStyle,'span');
+			addToVisibleQuote(quote.sentence[i],quoteVisible +' '+quoteStyle,'div');
+			addToVisibleQuote(' ',quoteVisible +' '+quoteStyle,'div');
 		}
 
 		//Add the markup for the author
-		addToHiddenQuote(quote.person,'hiddenQuoteAuthor','div');
-		addToVisibleQuote(quote.person,'visibleQuoteAuthor','div');
+		addToHiddenQuote(quote.person,'hiddenQuoteAuthor '+quoteAuthorStyle,'div');
+		addToVisibleQuote(quote.person,'visibleQuoteAuthor '+quoteAuthorStyle,'div');
 		
 		quotePlacePos = getRandomPos($('#quotePlace').width(),$('#quotePlace').height());
 		
-		console.log('Window Width = '+windowWidth+' | Windows Heigth = '+windowHeight);
-		console.log('quote place x = '+quotePlacePos.x+' | quote place y = '+quotePlacePos.y);
 		//Change the #quotePlace position
 		$('#quotePlace').animate({
 			'left':quotePlacePos.x,
