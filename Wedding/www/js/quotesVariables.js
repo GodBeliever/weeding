@@ -1,4 +1,4 @@
-\* Quote variable *\
+/* Quote variable */
 $.wedding = {};
 $.wedding.quote = [
 	{

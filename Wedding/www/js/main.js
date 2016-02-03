@@ -5,7 +5,7 @@ var actualQuote;
 var windowWidth;
 var windowHeight;
 var quotePartOneID = '#quotePartOne';
-var quotePartTwoID = '#quotePartOne';
+var quotePartTwoID = '#quotePartTwo';
 var quoteAuthorID = '#quoteAuthor';
 /* ---------------------------------------------------------------
  * -------------------- Helpers Functions ------------------------ 
@@ -21,8 +21,6 @@ function getAQuote(){
 }
 
 function quoteMng(){
-		actualQuote = {id:-1};
-		dispercedSentence = [];
 
 		quote = getAQuote();
 
@@ -32,11 +30,12 @@ function quoteMng(){
 		$(quoteAuthorID).contents().remove();
 		
 		//Processing the fadeIn
-		$(quote.partOne).appendTo( quotePartOneID ).fadeIn(800);
-		$(quote.partTwo).appendTo( quotePartTwoID ).fadeIn(800);
-		$(quote.author).appendTo( quoteAuthorID ).fadeIn(800);
+		$(quotePartOneID).text(quote.partOne).fadeIn(800);
+		$(quotePartTwoID).text(quote.partTwo).fadeIn(800);
+		$(quoteAuthorID).text(quote.author).fadeIn(800);
 
 		//Processing the fadeOut
+		nbCar = quote.partOne.length + quote.partTwo.length
 		var timeCoef = 1;
 		if(nbCar <= 10) {
 			timeCoef = 300;
@@ -48,13 +47,13 @@ function quoteMng(){
 			timeCoef = 50;
 		}
 		$(quotePartOneID).delay(nbCar * timeCoef).fadeOut(700, function(){
-			$(this).remove();
+			$(this).contents().remove();
 		});
 		$(quotePartTwoID).delay(nbCar * timeCoef).fadeOut(700, function(){
-			$(this).remove();
+			$(this).contents().remove();
 		});
 		$(quoteAuthorID).delay(nbCar * timeCoef).fadeOut(700, function(){
-			$(this).remove();
+			$(this).contents().remove();
 			setTimeout(quoteMng,2000);
 		});
 }
@@ -65,5 +64,6 @@ function quoteMng(){
 $(document).ready(function(){
 	windowWidth = $(window).width();
 	windowHeight = $(window).height();
+	actualQuote = {id:-1};
 	quoteMng();
 });
