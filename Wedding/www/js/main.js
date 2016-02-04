@@ -35,15 +35,15 @@ function quoteMng(){
 		$(quoteAuthorID).text(quote.author).fadeIn(800);
 
 		//Processing the fadeOut
-		nbCar = quote.partOne.length + quote.partTwo.length
+		nbCar = quote.partOne.length + quote.partTwo.length + quote.author.length
 		var timeCoef = 1;
-		if(nbCar <= 10) {
-			timeCoef = 300;
-		}else if(nbCar > 10 && nbCar <= 50){
+		if(nbCar <= 50) {
+			timeCoef = 250;
+		}else if(nbCar > 50 && nbCar <= 70){
 			timeCoef = 100;
-		} else if(nbCar > 50 && nbCar <= 100){
+		} else if(nbCar > 70 && nbCar <= 130){
 			timeCoef = 80;
-		}else if (nbCar > 100){
+		}else if (nbCar > 130){
 			timeCoef = 50;
 		}
 		$(quotePartOneID).delay(nbCar * timeCoef).fadeOut(700, function(){

@@ -17,6 +17,24 @@
 	     url('../rsc/font/Montez/Montez-Regular-webfont.svg#webfont') format('svg');
 }
 
+@font-face{ 
+	font-family: Lobster;
+	src: url('../rsc/font/Lobster/lobster_1.3-webfont.eot');
+	src: url('../rsc/font/Lobster/lobster_1.3-webfont.eot?iefix') format('eot'),
+	     url('../rsc/font/Lobster/lobster_1.3-webfont.ttf') format('truetype'),
+	     url('../rsc/font/Lobster/lobster_1.3-webfont.woff') format('woff'),
+	     url('../rsc/font/Lobster/lobster_1.3-webfont.svg#webfont') format('svg');
+}
+
+@font-face{ 
+	font-family: Penultimate;
+	src: url('../rsc/font/PenultimateLight/penultimatelight_regular-webfont.eot');
+	src: url('../rsc/font/PenultimateLight/penultimatelight_regular-webfont.eot?iefix') format('eot'),
+	     url('../rsc/font/PenultimateLight/penultimatelight_regular-webfont.ttf') format('truetype'),
+	     url('../rsc/font/PenultimateLight/penultimatelight_regular-webfont.woff') format('woff'),
+	     url('../rsc/font/PenultimateLight/penultimatelight_regular-webfont.svg#webfont') format('svg');
+}
+
 html {
     color: #222;
     font-size: 1em;
@@ -89,16 +107,7 @@ textarea {
  	height: auto;
  	min-height: 100%;
 	min-width: 100%;
-	/* For browsers that do not support gradients */
-	background: #003366;
-	/* Safari 5.1 to 6.0 */ 
-	background: -webkit-radial-gradient(#006699, #003366);
-	/* For Opera 11.6 to 12.0 */
-	background: -o-radial-gradient(#006699, #003366);
-	/* For Firefox 3.6 to 15 */
-	background: -moz-radial-gradient(#006699, #003366);
-	/* Standard syntax */
-	background: radial-gradient(#006699, #003366);
+	background-image: url("/rsc/img/caricature.jpg");
 }
 
 #homeLogo {
@@ -109,40 +118,48 @@ textarea {
  }
 /* --------------- Quote --------------- */
 #quotePlace {
+	position: absolute;
+	background: #3399cc;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	height: 7em;
+}
+
+#quotePartOne {
+	position:absolute;
+	color: #3399cc;
+	font-size: 7em;
+	font-family: Lobster;
+	font-weight: bold;
+	top: -1em;
+	left: 0.3em;
+	text-shadow: 0 0 5px #FFF; /* horizontal-offset vertical-offset 'blur' colour */
+  -moz-text-shadow: 0 0 2px #FFF;
+  -webkit-text-shadow: 0 0 2px #FFF;
+}
+
+#quotePartTwo{
 	position:absolute;
 	word-wrap: break-word;
-	width: 27em;
-	height: 18em;
-}
-
-.hiddenQuote {
-	visibility: hidden;
-}
-
-.hiddenQuoteAuthor {
-	visibility: hidden;
-}
-
-.visibleQuote {
-	position:absolute;
+	top: 0.27em;
+	left: 1.9em;
+	font-size: 2.3em;
+	font-family: Penultimate;
 	color: #FFFFFF;
-}
-
-.visibleQuoteAuthor{
-	position:absolute;
+	width: 80%;
 }
 
 .quote {
-	font-size: 2.3em;
-	font-family: Montez;
 	font-weight: bold;
 	font-style: italic;
 }
 
-.quoteAuthor {
-	margin: 0.4em 9% auto;
+#quoteAuthor {
+	position:absolute;
+	bottom: 0.2em;
+	right: 5em;
 	font-size: 1.9em;
 	font-family: Calligraffiti;
 	font-weight: 900;
-	font-style: italic;
 }

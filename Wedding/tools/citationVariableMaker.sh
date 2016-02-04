@@ -73,7 +73,7 @@ then
 fi
 
 #Write the fisrt line of the output
-printf "\* Quote variable *\\
+printf "/* Quote variable */
 $.wedding = {};
 $.wedding.quote = [\n" > $OUTFILE
 
