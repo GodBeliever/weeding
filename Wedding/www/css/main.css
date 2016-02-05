@@ -35,10 +35,156 @@
 	     url('../rsc/font/PenultimateLight/penultimatelight_regular-webfont.svg#webfont') format('svg');
 }
 
+/* ===== Normal Styles ==================================================
+   	Author: Alexandre François
+   ========================================================================== */
+/* --------------- Page setting --------------- */
+.page{
+	/*height:9.1% !important;
+	width:100% !important;*/
+ 	width: auto;
+ 	height: 100%;
+ 	min-height: 100%;
+	min-width: 100%;
+}
+
+#homePage{
+	background: url("/rsc/img/caricature.jpg") no-repeat center;
+}
+
+#logoPage{
+	background-color: #ff6666;
+	position: absolute;
+}
+ 
+#logo-wrapper {
+	margin:auto;
+    position:relative;
+    top: 50%;
+    left: 50%;
+    width:14em;
+    height:16em;
+    margin-top: -7em; /*set to a negative number 1/2 of your height*/
+    margin-left: -8em; /*set to a negative number 1/2 of your width*/
+}
+
+#homeLogo {
+ 	max-width: 100%;
+ 	max-height: 100%;
+ }
+/* --------------- Quote Setting --------------- */
+
+.quote {
+	font-weight: bold;
+	font-style: italic;
+}
+
+#quotePlace {
+	position: absolute;
+	background: #3399cc;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	height: 7em;
+}
+
+#quotePartOne {
+	position:absolute;
+	color: #3399cc;
+	top: -1em;
+	left: 0.3em;
+	font-size: 7em;
+	font-size: 10vw;
+	font-family: Lobster;
+	font-weight: bold;
+	text-shadow: 0 0 9px #FFF; /* horizontal-offset vertical-offset 'blur' colour */
+ 	-moz-text-shadow: 0 0 9px #FFF;
+	-webkit-text-shadow: 0 0 9px #FFF;
+}
+
+#quotePartTwo{
+	position:absolute;
+	top: 0.27em;
+	left: 1.9em;
+	font-size: 2.3em;
+	font-size: 2.1vw;
+	font-family: Penultimate;
+	color: #FFF;
+	width: 80%;
+}
+
+#quoteAuthor {
+	position:absolute;
+	bottom: 0.2em;
+	right: 7%;
+	font-size: 1.9em;
+	font-size: 1.9vw;
+	font-family: Calligraffiti;
+}
+
+/* ===== Mobile Styles ==================================================
+   	Author: Alexandre François
+   ========================================================================== */
+
+/* --------------- Quote Setting --------------- */
+.mobi .portrait #quotePlace {
+	/*left: 0;
+	bottom: 0;
+	right: 0;*/
+	height: 10em;
+}
+
+.mobi .portrait #quotePartOne {
+	/*position:absolute;
+	color: #3399cc;
+	font-size: 3.5em;
+	font-family: Lobster;
+	font-weight: bold;
+	top: -1em;
+	left: 0.3em;
+	text-shadow: 0 0 5px #FFF;
+  -moz-text-shadow: 0 0 2px #FFF;
+  -webkit-text-shadow: 0 0 2px #FFF;*/
+}
+
+.mobi #quotePartTwo{
+	/*position:absolute;
+	word-wrap: break-word;
+	top: 0.27em;
+	left: 1.9em;
+	font-size: 2.3em;
+	font-family: Penultimate;
+	color: #FFFFFF;
+	width: 80%;*/
+}
+
+.mobi #quoteAuthor {
+	/*position:absolute;
+	bottom: 0.2em;
+	right: 5em;
+	font-size: 1.9em;
+	font-family: Calligraffiti;
+	font-weight: 900;*/
+}
+
+/* ==========================================================================
+   	Initializer : Standard
+   ========================================================================== */
 html {
     color: #222;
     font-size: 1em;
     line-height: 1.4;
+    height:100% !important;
+    width:100% !important;
+    margin:0;
+    padding:0;
+}
+
+body{
+	height:1100% !important;
+	width:100% !important;
+	margin:0;
+	padding:0;	
 }
 
 ::-moz-selection {
@@ -84,82 +230,4 @@ textarea {
     background: #ccc;
     color: #000;
     padding: 0.2em 0;
-}
-
-/* ===== Lyly & Alex Styles ==================================================
-   Author: Alexandre François
-   ========================================================================== */
-   
-#logo-wrapper {
-	margin:auto;
-    position:absolute;
-    top: 50%;
-    left: 50%;
-    width:14em;
-    height:16em;
-    margin-top: -7em; /*set to a negative number 1/2 of your height*/
-    margin-left: -8em; /*set to a negative number 1/2 of your width*/
-}
-
-#homePage{
-	position:absolute;
- 	width: auto;
- 	height: auto;
- 	min-height: 100%;
-	min-width: 100%;
-	background-image: url("/rsc/img/caricature.jpg");
-}
-
-#homeLogo {
- 	width: auto;
- 	height: auto;
- 	max-width: 100%;
- 	max-height: 100%;
- }
-/* --------------- Quote --------------- */
-#quotePlace {
-	position: absolute;
-	background: #3399cc;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	height: 7em;
-}
-
-#quotePartOne {
-	position:absolute;
-	color: #3399cc;
-	font-size: 7em;
-	font-family: Lobster;
-	font-weight: bold;
-	top: -1em;
-	left: 0.3em;
-	text-shadow: 0 0 5px #FFF; /* horizontal-offset vertical-offset 'blur' colour */
-  -moz-text-shadow: 0 0 2px #FFF;
-  -webkit-text-shadow: 0 0 2px #FFF;
-}
-
-#quotePartTwo{
-	position:absolute;
-	word-wrap: break-word;
-	top: 0.27em;
-	left: 1.9em;
-	font-size: 2.3em;
-	font-family: Penultimate;
-	color: #FFFFFF;
-	width: 80%;
-}
-
-.quote {
-	font-weight: bold;
-	font-style: italic;
-}
-
-#quoteAuthor {
-	position:absolute;
-	bottom: 0.2em;
-	right: 5em;
-	font-size: 1.9em;
-	font-family: Calligraffiti;
-	font-weight: 900;
 }

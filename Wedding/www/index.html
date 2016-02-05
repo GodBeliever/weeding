@@ -10,6 +10,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+        <link rel="stylesheet" href="css/scrollpath.css">
         
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
@@ -41,20 +42,24 @@
                 </nav>
             </header>
         </div> -->
+	<div id="#pageWrapper">
+		<div id="homePage" class="main wrapper clearfix page">
 
-	<div id="homePage" class="main wrapper clearfix">
+			<div id="quotePlace">
+				<div id="quotePartOne" class="quote"></div>
+				<div id="quotePartTwo" class="quote"></div>
+				<div id="quoteAuthor" class="quote"></div>
+			</div>
 
-		<!-- <div id="logo-wrapper">
-			<img id="homeLogo" alt="Lyly & Alex : The Wedding"
-				src="rsc/img/caricature.png">
-		</div> -->
-
-		<div id="quotePlace">
-			<div id="quotePartOne"></div>
-			<div id="quotePartTwo"></div>
-			<div id="quoteAuthor"></div>
 		</div>
+		<div id="logoPage" class="page">
 
+			<div id="logo-wrapper">
+				<img id="homeLogo" alt="Lyly & Alex : The Wedding"
+					src="rsc/img/A_and_L.png">
+			</div>
+
+		</div>
 	</div>
 	<!-- #main -->
 
@@ -69,6 +74,8 @@
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
 
         <script src="js/plugins.js"></script>
+        <!-- TODO import scrollpath min 
+        <script type="text/javascript" src="js/vendor/jquery.scrollpath.js"></script>-->
         <script type="text/javascript" src="js/main.js"></script>
         <script type="text/javascript" src="js/quotesVariables.js"></script>
 

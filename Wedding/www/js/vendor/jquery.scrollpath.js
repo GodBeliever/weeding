@@ -375,9 +375,8 @@
 		
 		canvas = $( "<canvas>" ).
 					addClass( "sp-canvas" ).
-					css( style ).
-					prependTo( element );
-		
+					css( style );
+		canvas.prependTo( element );
 		canvas[ 0 ].width = pathObject.getPathWidth();
 		canvas[ 0 ].height = pathObject.getPathHeight();
 		
