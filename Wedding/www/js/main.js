@@ -47,6 +47,10 @@ function getAQuote(){
 	return actualQuote;
 }
 
+/* ---------------------------------------------------------------
+ * ------------------ Animation Functions ------------------------ 
+   --------------------------------------------------------------- */
+
 /*
  * Show and animate the quote content
  */
@@ -82,6 +86,24 @@ function quoteMng(){
 		});
 }
 
+/*
+ * Animation for the logo Section :
+ * 		Background changing to red
+ * 		Wedding logo bouncing
+ */
+function logoSectionAnim() {
+	// .to('@target', @length, {@object})
+	var bg_tween = TweenMax.to('#logoSection-trigger', 2, {
+	  backgroundColor: '#ff6666',
+	  ease: Linear.easeNone
+	});
+	var temp = new ScrollMagic.Scene({
+		  triggerElement: '#logoSection-trigger'
+	})
+	.setTween(bg_tween);
+	
+	return temp;
+}
 /* ---------------------------------------------------------------
  * ------------------------ Main function ------------------------ 
    --------------------------------------------------------------- */
@@ -99,25 +121,28 @@ $(document).ready(function(){
 	$(window).on('resize', resizeContent);
 	
 	resizeContent();
+
+	// Initiate and launch the quote animation on the home page
+	actualQuote = {id:-1};
+	quoteMng();
+
+	/* ------ ScrollMagic animation ------ */
+
+	// init ScrollMagic Controller
+	var controller = new ScrollMagic.Controller();
 	
-	console.log(windowWidth);
-	console.log(windowHeight);
-	// ScrollPath drawing
-	/*var path = $.fn.scrollPath("getPath");/*, {
-	    scrollSpeed: 80, // Default is 50
-	    rotationSpeed: Math.PI / 10 // Default is Math.PI / 15
-	});
+	var bg_tween = TweenMax.to('#logoSection-trigger', 2, {
+		  backgroundColor: '#ff6666',
+		  ease: Linear.easeNone
+		});
+		var temp = new ScrollMagic.Scene({
+			  triggerElement: '#logoSection-trigger'
+		})
+		.setTween(bg_tween);
+		
+		
+	controller.addScene(temp);
 	
-	path.moveTo(windowWidth/2,windowHeight/2)
-	// Line to the center of the scrren to 
-		.lineTo(windowWidth/2,windowHeight)
-		.arc(windowWidth * 0.75,windowHeight * 1.5 ,Math.PI,0.5*Math.PI,true);
-	
-	$("#pageWrapper").scrollPath({
-	    drawPath: true,
-	    wrapAround: false,
-	    scrollBar: true
-	});*/
 	// Declaration for the screen size management
     $('body').restive({
           breakpoints: ['10000'],
@@ -125,7 +150,4 @@ $(document).ready(function(){
           turbo_classes: 'is_mobile=mobi,is_phone=phone,is_tablet=tablet,is_landscape=landscape,is_portrait=portrait'
     });
 
-	// Initiate and launch the quote animation on the home page
-	actualQuote = {id:-1};
-	quoteMng();
 });
