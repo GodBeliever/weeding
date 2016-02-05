@@ -35,7 +35,7 @@ $.wedding.quote = [
 	 id:5,
 	 partOne: "L’Amour et la",
 	 partTwo: "compassion sont nécessaires, pas l’opulence. Sans eux, l’humanité ne peut survivre. ",
-	 author: "Dalai Lama"
+	 author: "Dalaï Lama"
 	},
 	{
 	 id:6,

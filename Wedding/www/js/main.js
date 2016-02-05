@@ -58,9 +58,9 @@ function quoteMng(){
 		$(quoteClass).contents().remove();
 		
 		//Processing the fadeIn
-		$(quotePartOneID).text(quote.partOne).fadeIn(1000);
-		$(quotePartTwoID).text(quote.partTwo).fadeIn(1000);
-		$(quoteAuthorID).text(quote.author).fadeIn(1000);
+		$(quotePartOneID).text(quote.partOne).fadeIn(1300);
+		$(quotePartTwoID).text(quote.partTwo).fadeIn(1300);
+		$(quoteAuthorID).text(quote.author).fadeIn(1300);
 
 		//Calculate the display duration time for the quote
 		nbCar = quote.partOne.length + quote.partTwo.length + quote.author.length
@@ -78,7 +78,7 @@ function quoteMng(){
 		//Processing the fadeOut
 		$(quoteClass).delay(nbCar * timeCoef).fadeOut(700, function(){
 			$(this).contents().remove();
-			setTimeout(quoteMng,1300);
+			setTimeout(quoteMng,2500);
 		});
 }
 
@@ -103,10 +103,10 @@ $(document).ready(function(){
 	console.log(windowWidth);
 	console.log(windowHeight);
 	// ScrollPath drawing
-	var path = $.fn.scrollPath("getPath");/*, {
+	/*var path = $.fn.scrollPath("getPath");/*, {
 	    scrollSpeed: 80, // Default is 50
 	    rotationSpeed: Math.PI / 10 // Default is Math.PI / 15
-	});*/
+	});
 	
 	path.moveTo(windowWidth/2,windowHeight/2)
 	// Line to the center of the scrren to 
@@ -117,7 +117,7 @@ $(document).ready(function(){
 	    drawPath: true,
 	    wrapAround: false,
 	    scrollBar: true
-	});
+	});*/
 	// Declaration for the screen size management
     $('body').restive({
           breakpoints: ['10000'],
