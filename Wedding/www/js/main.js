@@ -9,6 +9,10 @@ var quotePartOneID = '#quotePartOne';
 var quotePartTwoID = '#quotePartTwo';
 var quoteAuthorID = '#quoteAuthor';
 var quoteClass = '.quote';
+var redBG = '#ff6666';
+var wheelSpeed = 10;
+var horizontalScroll = false;
+var scrollTrigger = -1;
 
 /* ---------------------------------------------------------------
  * -------------------- Helpers Functions ------------------------ 
@@ -36,6 +40,29 @@ function debounce(func, wait, immediate) {
 };
 
 /*
+ * Activate the horizontal scroll with the wheel
+ */
+function activateHorizontalScroll() {
+	//$("html, body, *").mousewheel(function(event, delta) {
+	
+	if(horizontalScroll){
+		horizontalScroll = false;
+		/*$("html, body").mousewheel(function(event, delta) {
+			console.log("scroll top");
+			this.scrollTop -= (delta * wheelSpeed);
+			this.scrollLeft = delta;
+		});*/
+		console.log("scroll top");
+		$("html, body").unmousewheel();
+	} else {
+		horizontalScroll = true;
+		$("html, body").mousewheel(function(event, delta) {
+			this.scrollLeft -= (delta * wheelSpeed);
+			event.preventDefault();
+		});
+	}
+}
+/*
  * Select a random quote from the quote variable.
  */
 function getAQuote(){
@@ -54,18 +81,19 @@ function getAQuote(){
 /*
  * Show and animate the quote content
  */
-function quoteMng(){
+function quoteAnim(){
 
 		quote = getAQuote();
 		
 		//Flush all citation data
-		$(quoteClass).contents().remove();
+		//$(quoteClass).contents().remove();
 		
 		//Processing the fadeIn
-		$(quotePartOneID).text(quote.partOne).fadeIn(1300);
-		$(quotePartTwoID).text(quote.partTwo).fadeIn(1300);
-		$(quoteAuthorID).text(quote.author).fadeIn(1300);
-
+		$(quotePartOneID).text(quote.partOne);
+		$(quotePartTwoID).text(quote.partTwo);
+		$(quoteAuthorID).text(quote.author);
+		$(quoteClass).fadeIn(1000);
+		
 		//Calculate the display duration time for the quote
 		nbCar = quote.partOne.length + quote.partTwo.length + quote.author.length
 		var timeCoef = 1;
@@ -82,67 +110,131 @@ function quoteMng(){
 		//Processing the fadeOut
 		$(quoteClass).delay(nbCar * timeCoef).fadeOut(700, function(){
 			$(this).contents().remove();
-			setTimeout(quoteMng,2500);
+			setTimeout(quoteAnim,2000);
 		});
 }
 
 /*
- * Animation for the logo Section :
- * 		Background changing to red
- * 		Wedding logo bouncing
+ * Parallax to home
  */
-function logoSectionAnim() {
-	// .to('@target', @length, {@object})
-	var bg_tween = TweenMax.to('#logoSection-trigger', 2, {
-	  backgroundColor: '#ff6666',
-	  ease: Linear.easeNone
-	});
-	var temp = new ScrollMagic.Scene({
-		  triggerElement: '#logoSection-trigger'
+function homePageAnim() {
+	var timeline = new TimelineMax()
+						.add([
+								TweenMax.to('#bgImage', 1, {
+									top: "-=100",
+									ease: Linear.easeNone
+								}),
+								
+						]);
+	return new ScrollMagic.Scene({
+		triggerElement: '#homeSection-trigger',
+		triggerHook: 'onLeave',
+		duration: 550
 	})
-	.setTween(bg_tween);
-	
-	return temp;
+	.setTween(timeline);
 }
+
+/*
+ * Background changing to red
+ */
+function logoSectionColorBG() {
+	// .to('@target', @length, {@object})
+	var bg_tween = TweenMax.to('#logoPage', 1, {
+		  backgroundColor: redBG, // Rouge
+		  ease: Linear.easeNone,
+		  onComplete: activateHorizontalScroll
+		});
+	
+	var scene = new ScrollMagic.Scene({
+		triggerElement: '#logoSection-trigger',
+		triggerHook: 'onLeave',
+		duration: 400
+	})
+	.setTween(bg_tween)
+	.setPin("#logoPage");
+	
+	scene.on("update", function (event) {
+		//if(horizontalScroll && $('html').scrollLeft() == 0 ){
+		if(horizontalScroll && $('html').scrollLeft() == 0){
+			console.log("scrollLeft = "+$('html').scrollLeft()+" | "+$('#logoPage').offset());
+			activateHorizontalScroll();
+		}
+	});
+	
+	return scene; 
+}
+
+/*
+ * Wedding logo bouncing
+ */
+function logoBoucing() {
+	var timeline = new TimelineMax({repeat: -1, yoyo:true});
+	
+	timeline.add(
+		TweenMax.to('#logo-wrapper', 1, {
+			transform: 'rotate(20deg)',
+			ease: Cubic.easeOut,
+		})
+	);
+	timeline.add(
+		TweenMax.to('#logo-wrapper', 1, {
+			transform: 'rotate(-20deg)',
+			ease: Cubic.easeOut,
+		})
+	);
+	
+	return new ScrollMagic.Scene({
+		triggerElement: '#logoSection-trigger'
+	})
+	.setTween(timeline);
+}
+
+
 /* ---------------------------------------------------------------
  * ------------------------ Main function ------------------------ 
    --------------------------------------------------------------- */
 $(document).ready(function(){
-	
+	/* ------ Disable vertical scroll ------ */
+	var $body = $('document');
+	$body.bind('scroll', function() {
+		// "Disable" the horizontal scroll.
+		if ($body.scrollLeft() !== 0) {
+			$body.scrollLeft(0);
+		}
+	});
+	 
+	/* ------ Resizing Screen Management ------ */
 	// Perform the content resizing at last all the 250 ms
 	var resizeContent = debounce(function() {
 		windowWidth = $(window).width();
 		windowHeight = $(window).height();
-		$(".page").css(
-			"height",windowHeight
-		);
+		$(".page").css({
+			"height" :windowHeight,
+			"width" : windowWidth
+		});
 	}, 250);
 
 	$(window).on('resize', resizeContent);
 	
 	resizeContent();
-
+	
+	/* ------ Manual animation ------ */
 	// Initiate and launch the quote animation on the home page
 	actualQuote = {id:-1};
-	quoteMng();
+	quoteAnim();
 
 	/* ------ ScrollMagic animation ------ */
 
 	// init ScrollMagic Controller
 	var controller = new ScrollMagic.Controller();
 	
-	var bg_tween = TweenMax.to('#logoSection-trigger', 2, {
-		  backgroundColor: '#ff6666',
-		  ease: Linear.easeNone
-		});
-		var temp = new ScrollMagic.Scene({
-			  triggerElement: '#logoSection-trigger'
-		})
-		.setTween(bg_tween);
-		
-		
-	controller.addScene(temp);
+	// Home page parallax
+	homePageAnim().addTo(controller);
+	// Animation for the logo Section
+	logoSectionColorBG().addTo(controller);
+	logoBoucing().addTo(controller);
 	
+	/* ------ Restive.js init ------ */
 	// Declaration for the screen size management
     $('body').restive({
           breakpoints: ['10000'],
