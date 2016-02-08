@@ -43,24 +43,18 @@ function debounce(func, wait, immediate) {
  * Activate the horizontal scroll with the wheel
  */
 function activateHorizontalScroll() {
-	//$("html, body, *").mousewheel(function(event, delta) {
-	
-	if(horizontalScroll){
-		horizontalScroll = false;
-		/*$("html, body").mousewheel(function(event, delta) {
-			console.log("scroll top");
-			this.scrollTop -= (delta * wheelSpeed);
-			this.scrollLeft = delta;
-		});*/
-		console.log("scroll top");
-		$("html, body").unmousewheel();
-	} else {
-		horizontalScroll = true;
-		$("html, body").mousewheel(function(event, delta) {
-			this.scrollLeft -= (delta * wheelSpeed);
-			event.preventDefault();
-		});
-	}
+	console.log("Scroll on");
+	horizontalScroll = true;
+	$("html, body").mousewheel(function(event, delta) {
+		this.scrollLeft -= (delta * wheelSpeed);
+		event.preventDefault();
+	});
+}
+
+function desactivateHorizontalScroll() {
+	console.log("Scroll off");
+	horizontalScroll = false;
+	$("html, body").unmousewheel();
 }
 /*
  * Select a random quote from the quote variable.
@@ -137,8 +131,32 @@ function homePageAnim() {
 /*
  * Background changing to red
  */
-function logoSectionColorBG() {
-	// .to('@target', @length, {@object})
+function logoPageAnim() {
+	
+	var timeline = new TimelineMax();
+	
+	timeline.add(
+			TweenMax.from('#weddingLogo', 2.5,
+			{
+				scale : 0.05,
+				opacity: 0,
+				rotation: 360,
+				ease: Cubic.easeOut,
+			})
+	);
+	timeline.add(
+			TweenMax.to('#logoPage', 1, {
+				backgroundColor: redBG, // Rouge
+				ease: Linear.easeNone,
+				onComplete: activateHorizontalScroll
+			})
+	);
+	
+	/*return new ScrollMagic.Scene({
+		triggerElement: '#logoSection-trigger'
+	})
+	.setTween(timeline);
+	
 	var bg_tween = TweenMax.to('#logoPage', 1, {
 		  backgroundColor: redBG, // Rouge
 		  ease: Linear.easeNone,
@@ -148,37 +166,52 @@ function logoSectionColorBG() {
 	var scene = new ScrollMagic.Scene({
 		triggerElement: '#logoSection-trigger',
 		triggerHook: 'onLeave',
-		duration: 400
+		duration: 350
 	})
 	.setTween(bg_tween)
-	.setPin("#logoPage");
+	.setPin("#logoSection-trigger");
 	
 	scene.on("update", function (event) {
 		//if(horizontalScroll && $('html').scrollLeft() == 0 ){
 		if(horizontalScroll && $('html').scrollLeft() == 0){
-			console.log("scrollLeft = "+$('html').scrollLeft()+" | "+$('#logoPage').offset());
-			activateHorizontalScroll();
+			//console.log("scrollLeft = "+$('html').scrollLeft()+" | #logoPage.offset="+$('#logoPage').offset());
+			desactivateHorizontalScroll();
 		}
 	});
 	
-	return scene; 
+	return scene;*/
+	
+	return new ScrollMagic.Scene({
+		triggerElement: '#logoSection-trigger',
+		triggerHook: 'onLeave',
+		duration: 350
+	})
+	.setTween(timeline)
+	.setPin("#logoPage")
+	.on("update", function (event) {
+		//if(horizontalScroll && $('html').scrollLeft() == 0 ){
+		if(horizontalScroll && $('html').scrollLeft() == 0){
+			//console.log("scrollLeft = "+$('html').scrollLeft()+" | #logoPage.offset="+$('#logoPage').offset());
+			desactivateHorizontalScroll();
+		}
+	});
 }
 
 /*
- * Wedding logo bouncing
+ * Wedding logo showing
  */
-function logoBoucing() {
+function logoArivalAnim() {
 	var timeline = new TimelineMax({repeat: -1, yoyo:true});
 	
 	timeline.add(
 		TweenMax.to('#logo-wrapper', 1, {
-			transform: 'rotate(20deg)',
+			transform: 'scale(1.5)',
 			ease: Cubic.easeOut,
 		})
 	);
 	timeline.add(
 		TweenMax.to('#logo-wrapper', 1, {
-			transform: 'rotate(-20deg)',
+			transform: 'scale(1)',
 			ease: Cubic.easeOut,
 		})
 	);
@@ -231,8 +264,7 @@ $(document).ready(function(){
 	// Home page parallax
 	homePageAnim().addTo(controller);
 	// Animation for the logo Section
-	logoSectionColorBG().addTo(controller);
-	logoBoucing().addTo(controller);
+	logoPageAnim().addTo(controller);
 	
 	/* ------ Restive.js init ------ */
 	// Declaration for the screen size management
