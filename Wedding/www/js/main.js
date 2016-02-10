@@ -10,6 +10,7 @@ var quotePartTwoID = '#quotePartTwo';
 var quoteAuthorID = '#quoteAuthor';
 var quoteClass = '.quote';
 var redBG = '#ff6666';
+var greyBG = '#333333';
 var wheelSpeed = 10;
 var horizontalScroll = false;
 var scrollTrigger = -1;
@@ -43,18 +44,18 @@ function debounce(func, wait, immediate) {
  * Activate the horizontal scroll with the wheel
  */
 function activateHorizontalScroll() {
-	console.log("Scroll on");
+	console.log('Scroll on');
 	horizontalScroll = true;
-	$("html, body").mousewheel(function(event, delta) {
+	$('html, body').mousewheel(function(event, delta) {
 		this.scrollLeft -= (delta * wheelSpeed);
 		event.preventDefault();
 	});
 }
 
 function desactivateHorizontalScroll() {
-	console.log("Scroll off");
+	console.log('Scroll off');
 	horizontalScroll = false;
-	$("html, body").unmousewheel();
+	$('html, body').unmousewheel();
 }
 /*
  * Select a random quote from the quote variable.
@@ -115,7 +116,7 @@ function homePageAnim() {
 	var timeline = new TimelineMax()
 						.add([
 								TweenMax.to('#bgImage', 1, {
-									top: "-=100",
+									top: '-=100',
 									ease: Linear.easeNone
 								}),
 								
@@ -123,73 +124,42 @@ function homePageAnim() {
 	return new ScrollMagic.Scene({
 		triggerElement: '#homeSection-trigger',
 		triggerHook: 'onLeave',
+		//loglevel: 3,
 		duration: 550
 	})
 	.setTween(timeline);
 }
 
 /*
+ * Wedding logo rotation
  * Background changing to red
  */
 function logoPageAnim() {
 	
-	var timeline = new TimelineMax();
-	
-	timeline.add(
-			TweenMax.from('#weddingLogo', 2.5,
+	var timeline = new TimelineMax()
+			.from('#weddingLogo', 1.5,
 			{
 				scale : 0.05,
 				opacity: 0,
 				rotation: 360,
-				ease: Cubic.easeOut,
+				ease: Cubic.easeOut
 			})
-	);
-	timeline.add(
-			TweenMax.to('#logoPage', 1, {
-				backgroundColor: redBG, // Rouge
+			.to('#logoPage', 1,
+			{
+				backgroundColor: redBG,
 				ease: Linear.easeNone,
 				onComplete: activateHorizontalScroll
-			})
-	);
-	
-	/*return new ScrollMagic.Scene({
-		triggerElement: '#logoSection-trigger'
-	})
-	.setTween(timeline);
-	
-	var bg_tween = TweenMax.to('#logoPage', 1, {
-		  backgroundColor: redBG, // Rouge
-		  ease: Linear.easeNone,
-		  onComplete: activateHorizontalScroll
-		});
-	
-	var scene = new ScrollMagic.Scene({
-		triggerElement: '#logoSection-trigger',
-		triggerHook: 'onLeave',
-		duration: 350
-	})
-	.setTween(bg_tween)
-	.setPin("#logoSection-trigger");
-	
-	scene.on("update", function (event) {
-		//if(horizontalScroll && $('html').scrollLeft() == 0 ){
-		if(horizontalScroll && $('html').scrollLeft() == 0){
-			//console.log("scrollLeft = "+$('html').scrollLeft()+" | #logoPage.offset="+$('#logoPage').offset());
-			desactivateHorizontalScroll();
-		}
-	});
-	
-	return scene;*/
+			});
 	
 	return new ScrollMagic.Scene({
 		triggerElement: '#logoSection-trigger',
 		triggerHook: 'onLeave',
-		duration: 350
+		//loglevel: 3,
+		duration: $(window).height()
 	})
 	.setTween(timeline)
-	.setPin("#logoPage")
-	.on("update", function (event) {
-		//if(horizontalScroll && $('html').scrollLeft() == 0 ){
+	.setPin('#logoSection-trigger')
+	.on('update', function (event) {
 		if(horizontalScroll && $('html').scrollLeft() == 0){
 			//console.log("scrollLeft = "+$('html').scrollLeft()+" | #logoPage.offset="+$('#logoPage').offset());
 			desactivateHorizontalScroll();
@@ -198,31 +168,81 @@ function logoPageAnim() {
 }
 
 /*
- * Wedding logo showing
+ * Background changing to grey
+ * Text Animation 
  */
-function logoArivalAnim() {
-	var timeline = new TimelineMax({repeat: -1, yoyo:true});
+function lylysPageAnim() {
 	
-	timeline.add(
-		TweenMax.to('#logo-wrapper', 1, {
-			transform: 'scale(1.5)',
-			ease: Cubic.easeOut,
-		})
-	);
-	timeline.add(
-		TweenMax.to('#logo-wrapper', 1, {
-			transform: 'scale(1)',
-			ease: Cubic.easeOut,
-		})
-	);
+	var timeline = new TimelineMax()
+			/*.to('.animeToGrey', 0,
+			{
+				backgroundColor: greyBG,
+				ease: Linear.easeNone
+			})*/
+			.from('#lylyPage > h1',1,
+			{
+				scale : 0.5,
+				opacity: 0,
+				ease: Cubic.easeOut
+			})
+			.from('#lylyArrow',1,
+			{
+				scale : 0.5,
+				opacity: 0,
+				rotation: -20,
+				ease: Cubic.easeOut
+			})
+			//Ajouter ici anim pour photo lyly
+			.from('#lylyPage > h2',2,
+			{
+				scale : 0.5,
+				opacity: 0,
+				ease: Cubic.easeOut
+			});
 	
 	return new ScrollMagic.Scene({
-		triggerElement: '#logoSection-trigger'
+		triggerElement: '#lylySection-trigger',
+		triggerHook: 'onLeave',
+		//loglevel: 3,
+		duration: $(window).width()
 	})
-	.setTween(timeline);
+	.setTween(timeline)
+	.setPin('#lylyPage');
 }
 
-
+/*
+ * Background changing to grey
+ * Text Animation 
+ */
+function alexsPageAnim() {
+	
+	var timeline = new TimelineMax()
+			/*.to('body', 0,
+			{
+				backgroundColor: greyBG,
+				ease: Linear.easeNone
+			})*/
+			.staggerTo('#cause > span',1,
+			{
+				textDecoration: 'line-through',
+				ease: Cubic.easeOut
+			}
+			,0.07)
+			.from('#grace',1,
+			{
+				opacity: 0,
+				ease: Cubic.easeOut
+			});
+	
+	return new ScrollMagic.Scene({
+		triggerElement: '#alexSection-trigger',
+		triggerHook: 'onLeave',
+		//loglevel: 3,
+		duration: $(window).width()
+	})
+	.setTween(timeline)
+	.setPin('#alexSection-trigger');
+}
 /* ---------------------------------------------------------------
  * ------------------------ Main function ------------------------ 
    --------------------------------------------------------------- */
@@ -241,16 +261,26 @@ $(document).ready(function(){
 	var resizeContent = debounce(function() {
 		windowWidth = $(window).width();
 		windowHeight = $(window).height();
-		$(".page").css({
-			"height" :windowHeight,
-			"width" : windowWidth
+		$('.page').css({
+			'height' :windowHeight,
+			'width' : windowWidth
 		});
 	}, 250);
 
 	$(window).on('resize', resizeContent);
 	
 	resizeContent();
-	
+	/* ------ Canvas Drawing (Lyly's Page)  ------ */
+	/*var canvas = document.getElementById('lylysCanvas');
+    var context = canvas.getContext('2d');
+
+    context.beginPath();
+    context.moveTo(0, 0);
+    context.quadraticCurveTo(canvas.width, canvas.height/2, 0, canvas.height);
+
+    context.fillStyle = redBG;
+    context.fill();*/
+    
 	/* ------ Manual animation ------ */
 	// Initiate and launch the quote animation on the home page
 	actualQuote = {id:-1};
@@ -259,12 +289,17 @@ $(document).ready(function(){
 	/* ------ ScrollMagic animation ------ */
 
 	// init ScrollMagic Controller
-	var controller = new ScrollMagic.Controller();
+	var controller = new ScrollMagic.Controller({addIndicators: true});
+	var horizontalController = new ScrollMagic.Controller({vertical:false,addIndicators: true});
 	
 	// Home page parallax
 	homePageAnim().addTo(controller);
 	// Animation for the logo Section
 	logoPageAnim().addTo(controller);
+	// Animation for the Lyly's Section
+	lylysPageAnim().addTo(horizontalController);
+	// Animation for the Alex's Section
+	alexsPageAnim().addTo(horizontalController);
 	
 	/* ------ Restive.js init ------ */
 	// Declaration for the screen size management

@@ -20,12 +20,24 @@
         <!-- adaptive-images Script -->
 		<script>document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/';</script>
 		
+		
         <!--[if lt IE 9]>
             <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
             <script>window.html5 || document.write('<script src="js/vendor/html5shiv.js"><\/script>')</script>
         <![endif]-->
+        
+        <style type="text/css">
+		    #warning-message { display: none; }
+		    @media only screen and (orientation:portrait){
+		        #wrapper { display:none; }
+		        #warning-message { display:block; }
+		    }
+		    @media only screen and (orientation:landscape){
+		        #warning-message { display:none; }
+		    }
+		</style>
     </head>
-    <body>
+    <body class="animeToRed animeToGrey">
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
@@ -45,7 +57,7 @@
 	<div id="pageWrapper">
 		
 		<div class="row">
-			<section id="homeSection-trigger">
+			<section id="homeSection-trigger" class="cell">
 				<div id="homePage" class="main wrapper clearfix page">
 					<div id="bgImage">&nbsp;</div>
 					<div id="quotePlace">
@@ -59,21 +71,35 @@
 		
 		<div id="row2" class="row">
 			<section id="logoSection-trigger" class="cell">
-				<div id="logoPage" class="page">
-					<!-- <div id="logo-wrapper"> -->
+				<div id="logoPage" class="page animeToRed">
 						<img id="weddingLogo" alt="Lyly & Alex : The Wedding"
 							src="rsc/img/A_and_L_white.png">
-					<!-- </div> -->
 				</div>
 			</section>
 
-			<section id="lylySection-trigger">
+			<section id="lylySection-trigger" class="cell">
 				<div id="lylyPage" class="page">
-					<canvas></canvas>
+					<img id="lylysBG" src="rsc/img/lylysBG.png">
+					<h1>Lydia<br/>AUGUSTE</h1>
+					<h2>va bient&ocirc;t changer de <mark>pr&eacute;nom de famille</mark></h2>
+					<img id="lylyArrow" src="rsc/img/LylysArrow.png">
+				</div>
+			</section>
+			
+			<section id="alexSection-trigger" class="cell">
+				<div id="alexPage" class="page">
+					<img id="alexsBG" src="rsc/img/alexsBG.png">
+					<h2><span>&Agrave;</span><span> </span><span>c</span><span>a</span><span>u</span><span>s</span><span>e</span><span> </span><span>d</span><span>e</span> <mark>Lui</mark></h2>
+					<h2 id="grace">Gr&acirc;ce &agrave;</h2>
+					<h1>Alexandre<br/>FRAN&Ccedil;OIS</h1>
+					<!-- <img id="lylyArrow" src="rsc/img/LylysArrow.png"> -->
 				</div>
 			</section>
 		</div>
 
+	</div>
+	<div id="warning-message">
+    	this website is only viewable in landscape mode
 	</div>
 	<!-- #main -->
 
@@ -93,6 +119,8 @@
 		<script src="js/vendor/TweenMax.js"></script>
 		<script src="js/vendor/TimelineMax.js"></script>
 		<script src="js/vendor/animation.gsap.js"></script>
+		<!-- TODO supprimer-->
+		<script src="js/vendor/debug.addIndicators.js"></script>
 		<!-- GreenSock Animation Platform - GSAP -->
 		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script> -->
 
@@ -100,6 +128,7 @@
         <script type="text/javascript" src="js/main.js"></script>
         <script type="text/javascript" src="js/quotesVariables.js"></script>
 
+		
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
