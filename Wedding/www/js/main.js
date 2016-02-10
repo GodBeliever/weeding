@@ -204,7 +204,7 @@ function lylysPageAnim() {
 		triggerElement: '#lylySection-trigger',
 		triggerHook: 'onLeave',
 		//loglevel: 3,
-		duration: $(window).width()
+		duration: $(window).width()*1.5
 	})
 	.setTween(timeline)
 	.setPin('#lylyPage');
@@ -217,11 +217,11 @@ function lylysPageAnim() {
 function alexsPageAnim() {
 	
 	var timeline = new TimelineMax()
-			/*.to('body', 0,
+			.to('body', 0,
 			{
 				backgroundColor: greyBG,
 				ease: Linear.easeNone
-			})*/
+			})
 			.staggerTo('#cause > span',1,
 			{
 				textDecoration: 'line-through',
@@ -236,7 +236,7 @@ function alexsPageAnim() {
 	
 	return new ScrollMagic.Scene({
 		triggerElement: '#alexSection-trigger',
-		triggerHook: 'onLeave',
+		triggerHook: 'onEnter',
 		//loglevel: 3,
 		duration: $(window).width()
 	})
